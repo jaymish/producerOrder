@@ -1,8 +1,6 @@
 package com.order.producerorder.service.impl;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.order.producerorder.model.Orders;
 import com.order.producerorder.repo.OrderRepository;
 import com.order.producerorder.service.OrderService;
@@ -15,34 +13,29 @@ import java.util.List;
 
 @Service
 public class DefaultOrderService implements OrderService {
-    //List<Weather> list=new LinkedList<>();
 
     @Value("${url.to.consumer}")
     private String url;
 
     private OrderRepository orderRepository;
     private RestTemplate restTemplate;
-    private ObjectMapper objectMapper;
+
     private List<Orders> ordersList;
 
     @Autowired
-    public DefaultOrderService(OrderRepository orderRepository, RestTemplate restTemplate, ObjectMapper objectMapper, List<Orders> ordersList){
+    public DefaultOrderService(OrderRepository orderRepository, RestTemplate restTemplate,  List<Orders> ordersList){
         this.orderRepository = orderRepository;
         this.restTemplate=restTemplate;
-        this.objectMapper=objectMapper;
         this.ordersList=ordersList;
     }
 
     @Override
-    public boolean createOrders(Orders orders) throws JsonProcessingException {
-
+    public boolean createOrders(Orders orders) {
         return restTemplate.postForObject(url+"/createOrder", orders, boolean.class);
-
     }
 
     @Override
     public List<Orders> getAllOrders() {
-        //List<Orders> ordersList= (List<Orders>) orderRepository.findAll();
         return restTemplate.getForObject(url+"/getOrder", ordersList.getClass());
     }
 

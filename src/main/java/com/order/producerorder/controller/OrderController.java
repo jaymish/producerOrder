@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/weather")
+@RequestMapping(path = "/Order")
 public class OrderController {
 
     private OrderService orderService;
@@ -26,23 +26,23 @@ public class OrderController {
     }
 
 
-    @PostMapping("/addReading")
+    @PostMapping("/CreateOrder")
     @ApiOperation(value = "Order created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Order Created")
     })
-    public boolean addWeatherReading(@RequestBody Orders orders) throws JsonProcessingException {
+    public boolean createOrder(@RequestBody Orders orders)throws JsonProcessingException {
         System.out.println(orders);
         orderService.createOrders(orders);
         return true;
     }
 
-    @GetMapping("/getOrders")
+    @GetMapping("/getAllOrders")
     @ApiOperation(value = "Get All orders")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Orders Fetched")
     })
-    public List<Orders> getAll(){
+    public List<Orders> getAllOrders(){
         return orderService.getAllOrders();
     }
 
